@@ -1,3 +1,3 @@
-# Dragon Testing
+# Scourge Testing
 
-A repository for testing the dragon programming language.
+A repository for testing the Scourge Script programming language.
