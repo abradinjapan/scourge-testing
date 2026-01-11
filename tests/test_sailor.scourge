@@ -1,19 +1,19 @@
 [ main ]
 scourge.main()() = {
-    test.anvil()()
+    test.sailor()()
 }
 
 [ run test ]
-test.anvil()() = {
+test.sailor()() = {
     [ setup workspace ]
-    scourge.anvil.workspace.open()(workspace)
+    scourge.sailor.workspace.open()(workspace)
 
     [ do measuring pass ]
-    scourge.anvil.workspace.setup_pass(workspace, scourge.false)(workspace)
+    scourge.sailor.workspace.setup_pass(workspace, scourge.false)(workspace)
     test.write_program(workspace)(workspace)
 
     [ do writing pass ]
-    scourge.anvil.workspace.setup_pass(workspace, scourge.true)(workspace)
+    scourge.sailor.workspace.setup_pass(workspace, scourge.true)(workspace)
     test.write_program(workspace)(workspace)
 
     [ get program buffer ]
@@ -33,7 +33,7 @@ test.anvil()() = {
 }
 
 [ generate program ]
-test.write_program(workspace !scourge.anvil.workspace)(workspace !scourge.anvil.workspace) = {
+test.write_program(workspace !scourge.sailor.workspace)(workspace !scourge.sailor.workspace) = {
     [ setup message string ]
     scourge.set("The scourge awakens!%0a;")(message)
 
@@ -54,13 +54,13 @@ test.write_program(workspace !scourge.anvil.workspace)(workspace !scourge.anvil.
         scourge.address_to_cell(current:progress, scourge.constant.1)(character, current:progress)
 
         [ generate instructions ]
-        scourge.anvil.write.instruction.write_cell(workspace, character, write_to)(workspace)
-        scourge.anvil.write.instruction.debug.putchar(workspace, write_to)(workspace)
+        scourge.sailor.write.instruction.write_cell(workspace, character, write_to)(workspace)
+        scourge.sailor.write.instruction.debug.putchar(workspace, write_to)(workspace)
 
         [ jump to loop start ]
         scourge.jump.top(scourge.always, @write_prints)()
     }
 
     [ write program end ]
-    scourge.anvil.write.instruction.stop(workspace)(workspace)
+    scourge.sailor.write.instruction.stop(workspace)(workspace)
 }

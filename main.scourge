@@ -10,8 +10,8 @@ scourge.main()() = {
     [ test json ]
     test.json()()
 
-    [ test anvil ]
-    test.anvil()()
+    [ test sailor ]
+    test.sailor()()
 }
 
 [ basic language abilities ]
@@ -34,10 +34,10 @@ test.json()() = {
     scourge.just_run.one_file(file_path, program.input)(compilation.error, program.result, program.error)
 }
 
-[ test anvil abilities ]
-test.anvil()() = {
+[ test sailor abilities ]
+test.sailor()() = {
     [ setup file path ]
-    scourge.set("./tests/test_anvil.scourge")(file_path)
+    scourge.set("./tests/test_sailor.scourge")(file_path)
     scourge.pack.null()(program.input !scourge.buffer)
 
     [ run test ]
