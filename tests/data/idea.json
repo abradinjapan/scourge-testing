@@ -1,0 +1,163 @@
+{
+    "root": [
+        { "name": "files", "data": [ { "type": "list", "node": "file" }, { "type": "end_of_files" } ] }
+    ],
+    "file": [
+        { "name": "contents", "data": [ { "type": "list", "node": "code_type" }, { "type": "end_of_file" } ] }
+    ],
+    
+    "code_type": [
+        { "name": "alias", "data": [ "alias" ] },
+        { "name": "function", "data": [ "function" ] }
+    ],
+
+    "alias": [
+        { "name": "type_alias", "data": [ "type", "equal_marker", "type" ] }
+    ],
+
+    "function": [
+        { "name": "full_definition", "data": [ "name", "function_definition_arguments", "function_definition_arguments", "equal_marker", "scope_body" ] }
+    ],
+    "function_definition_arguments": [
+        { "name": "default", "data": [ "arguments_opener", { "type": "list", "node": "function_definition_argument" }, "arguments_closer" ] }
+    ],
+    "function_definition_argument": [
+        { "name": "typed", "data": [ "name", "type" ] },
+        { "name": "untyped", "data": [ "name" ] }
+    ],
+
+    "scope_body": [
+        { "name": "default", "data": [ "scope_opener", { "type": "list", "node": "statement" }, "scope_closer" ] }
+    ],
+    "statement": [
+        { "name": "named_scope", "data": [ "offset_marker", "name", "namespace", "equal_marker", "scope_body" ] },
+        { "name": "offset", "data": [ "offset_marker", "name" ] },
+        { "name": "function_call", "data": [ "name", "function_call_arguments", "function_call_arguments" ] }
+    ],
+    "function_call_arguments": [
+        { "name": "default", "data": [ "arguments_opener", { "type": "list", "node": "function_call_argument" }, "arguments_closer" ] }
+    ],
+    "function_call_argument": [
+        { "name": "type_only", "data": [ "type" ] },
+        { "name": "typed", "data": [ "namespace", "type" ] },
+        { "name": "namespace_only", "data": [ "namespace" ] }
+    ],
+
+    "type": [
+        { "name": "definition", "data": [ "type_marker", "name" ] }
+    ],
+
+    "namespace": [
+        { "name": "multiple_names", "data": [ "name", { "type": "list", "node": "subname" } ] },
+        { "name": "one_name", "data": [ "name" ] }
+    ],
+    "subname": [
+        { "name": "default", "data": [ "subname_marker", "name" ] }
+    ],
+
+    "name": [
+        { "name": "with_whitespace", "data": [ "whitespace", "name_literal_bytes" ] },
+        { "name": "without_whitespace", "data": [ "name_literal_bytes" ] }
+    ],
+    "type_marker": [
+        { "name": "with_whitespace", "data": [ "whitespace", "type_marker_bytes" ] },
+        { "name": "without_whitespace", "data": [ "type_marker_bytes" ] }
+    ],
+    "equal_marker": [
+        { "name": "with_whitespace", "data": [ "whitespace", "equal_marker_bytes" ] },
+        { "name": "without_whitespace", "data": [ "equal_marker_bytes" ] }
+    ],
+    "offset_marker": [
+        { "name": "with_whitespace", "data": [ "whitespace", "offset_marker_bytes" ] },
+        { "name": "without_whitespace", "data": [ "offset_marker_bytes" ] }
+    ],
+    "subname_marker": [
+        { "name": "with_whitespace", "data": [ "whitespace", "subname_marker_bytes" ] },
+        { "name": "without_whitespace", "data": [ "subname_marker_bytes" ] }
+    ],
+    "scope_opener": [
+        { "name": "with_whitespace", "data": [ "whitespace", "left_curly_bracket_bytes" ] },
+        { "name": "without_whitespace", "data": [ "left_curly_bracket_bytes" ] }
+    ],
+    "scope_closer": [
+        { "name": "with_whitespace", "data": [ "whitespace", "right_curly_bracket_bytes" ] },
+        { "name": "without_whitespace", "data": [ "right_curly_bracket_bytes" ] }
+    ],
+    "arguments_opener": [
+        { "name": "with_whitespace", "data": [ "whitespace", "left_parenthesis_bytes" ] },
+        { "name": "without_whitespace", "data": [ "left_parenthesis_bytes" ] }
+    ],
+    "arguments_closer": [
+        { "name": "with_whitespace", "data": [ "whitespace", "right_parenthesis_bytes" ] },
+        { "name": "without_whitespace", "data": [ "right_parenthesis_bytes" ] }
+    ],
+
+    "whitespace": [
+        { "name": "default", "data": [ "whitespace_bytes" ] }
+    ],
+
+    "name_literal_bytes": {
+        "byte_ranges": [
+            [ 46, 46 ],
+            [ 95, 95 ],
+            [ 48, 57 ],
+            [ 65, 90 ],
+            [ 97, 122 ]
+        ],
+        "byte_count_limits": [ 1, 99999 ]
+    },
+    "type_marker_bytes": {
+        "byte_ranges": [
+            [ 33, 33 ]
+        ],
+        "byte_count_limits": [ 1, 1 ]
+    },
+    "equal_marker_bytes": {
+        "byte_ranges": [
+            [ 61, 61 ]
+        ],
+        "byte_count_limits": [ 1, 1 ]
+    },
+    "offset_marker_bytes": {
+        "byte_ranges": [
+            [ 64, 64 ]
+        ],
+        "byte_count_limits": [ 1, 1 ]
+    },
+    "subname_marker_bytes": {
+        "byte_ranges": [
+            [ 58, 58 ]
+        ],
+        "byte_count_limits": [ 1, 1 ]
+    },
+    "left_curly_bracket_bytes": {
+        "byte_ranges": [
+            [ 123, 123 ]
+        ],
+        "byte_count_limits": [ 1, 1 ]
+    },
+    "right_curly_bracket_bytes": {
+        "byte_ranges": [
+            [ 125, 125 ]
+        ],
+        "byte_count_limits": [ 1, 1 ]
+    },
+    "left_parenthesis_bytes": {
+        "byte_ranges": [
+            [ 40, 40 ]
+        ],
+        "byte_count_limits": [ 1, 1 ]
+    },
+    "right_parenthesis_bytes": {
+        "byte_ranges": [
+            [ 41, 41 ]
+        ],
+        "byte_count_limits": [ 1, 1 ]
+    },
+    "whitespace_bytes": {
+        "byte_ranges": [
+            [ 0, 32 ]
+        ],
+        "byte_count_limits": [ 1, 99999999 ]
+    }
+}

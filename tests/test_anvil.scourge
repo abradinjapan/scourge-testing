@@ -1,0 +1,66 @@
+[ main ]
+scourge.main()() = {
+    test.anvil()()
+}
+
+[ run test ]
+test.anvil()() = {
+    [ setup workspace ]
+    scourge.anvil.workspace.open()(workspace)
+
+    [ do measuring pass ]
+    scourge.anvil.workspace.setup_pass(workspace, scourge.false)(workspace)
+    test.write_program(workspace)(workspace)
+
+    [ do writing pass ]
+    scourge.anvil.workspace.setup_pass(workspace, scourge.true)(workspace)
+    test.write_program(workspace)(workspace)
+
+    [ get program buffer ]
+    scourge.copy(workspace:program)(program)
+
+    [ install program into context ]
+    scourge.context.open()(context)
+    scourge.context.install_program(context, program)()
+
+    [ run program ]
+    scourge.set(scourge.integer.n1)(instruction_count)
+    scourge.context.run(context, instruction_count)()
+
+    [ clean up ]
+    scourge.buffer.return(context)()
+    scourge.buffer.return(program)()
+}
+
+[ generate program ]
+test.write_program(workspace !scourge.anvil.workspace)(workspace !scourge.anvil.workspace) = {
+    [ setup message string ]
+    scourge.set("The scourge awakens!%0a;")(message)
+
+    [ setup character cell ]
+    scourge.set(scourge.integer.8192[ FIX LATER ])(write_to)
+
+    [ generate character printers ]
+    [ setup current ]
+    scourge.pack(message, message:start)(current !scourge.current)
+
+    [ character printing loop ]
+    @write_prints scourge.always = {
+        [ check if more characters to print, otherwise exit loop ]
+        scourge.current.within_range(current)(in_range, out_of_range)
+        scourge.jump.bottom(out_of_range, @write_prints)()
+
+        [ get character ]
+        scourge.address_to_cell(current:progress, scourge.constant.1)(character, current:progress)
+
+        [ generate instructions ]
+        scourge.anvil.write.instruction.write_cell(workspace, character, write_to)(workspace)
+        scourge.anvil.write.instruction.debug.putchar(workspace, write_to)(workspace)
+
+        [ jump to loop start ]
+        scourge.jump.top(scourge.always, @write_prints)()
+    }
+
+    [ write program end ]
+    scourge.anvil.write.instruction.stop(workspace)(workspace)
+}

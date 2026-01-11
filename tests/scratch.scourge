@@ -1,0 +1,684 @@
+scourge.main()() = {
+    [ start timer ]
+    scourge.time.now()(time.start)
+    scratch.print.time(time.start)()
+
+    [ declare variables ]
+    scourge.set(scourge.integer.100)(a)
+    scourge.set("Scratching...%0a;")(message)
+    scourge.pack(a, a)(buff !scourge.buffer)
+
+    [ print variables ]
+    scourge.print.buffer_as_string(message)()
+    scourge.print.integer.unsigned(a)()
+    scourge.print.new_line()()
+    scourge.print.integer.unsigned(buff:start)()
+    scourge.print.new_line()()
+
+    @oof
+
+    @scope scourge.never = {
+        scourge.set(scourge.integer.200)(b)
+        scourge.print.integer.unsigned(b)()
+        scourge.print.new_line()()
+
+        @electric_boogaloo
+    }
+
+    scratch.say(message)(value)
+    scourge.print.integer.unsigned(value)()
+    scourge.print.new_line()()
+
+    scratch.create.box_3D()(box)
+    scratch.print.box_3D(box)()
+
+    scratch.test.jumping()()
+    scourge.set(scourge.integer.22)(c)
+    scratch.test.checking(c)()
+
+    [ test maths! ]
+    scratch.test.maths(a, c)(math)
+    scratch.test.maths.print(math)()
+
+    scourge.copy(math)(more_maths)
+    scratch.test.maths.print(more_maths)()
+    scourge.pack.null()(no_maths !scratch.maths)
+    scratch.test.maths.print(no_maths)()
+
+    [ test buffers ]
+    scratch.test.buffer()()
+
+    [ test printing ]
+    scratch.test.printing()()
+
+    [ test file buffer movers ]
+    scratch.test.file_buffer_movers()()
+
+    [ test lists ]
+    scourge.set("fluffy")(message)
+    scourge.set(scourge.integer.9)(increase)
+    scratch.test.list(increase, message)()
+
+    [ test bits ]
+    scratch.test.bits()()
+
+    [ test buffer assorted ]
+    scratch.test.buffers_assorted()()
+
+    [ test structures assorted ]
+    scratch.test.structures_assorted()()
+
+    [ test current assorted ]
+    scratch.test.current_assorted(message)()
+
+    [ test compiler assorted ]
+    scratch.test.compiler_assorted()()
+
+    [ test allocation finder ]
+    scratch.test.find_allocation()()
+
+    [ test allocation limit ]
+    scratch.test.allocation_limits()()
+
+    [ test time functions ]
+    scratch.test.time_assorted()()
+
+    [ test stack functionality ]
+    scratch.test.stack_assorted()()
+    
+    [ end timer ]
+    scourge.time.now()(time.end)
+    scratch.print.time(time.end)()
+
+    [ print elapsed time ]
+    scourge.integer.subtract(time.end:seconds, time.start:seconds)(seconds_elapsed)
+    scourge.integer.subtract(time.end:nanoseconds, time.start:nanoseconds)(nanoseconds_elapsed)
+    scourge.pack(seconds_elapsed, nanoseconds_elapsed)(time.taken !scourge.time)
+    scratch.print.time(time.taken)()
+
+    [ test stop ]
+    scourge.set("Stopping!%0a;")(message)
+    scourge.print.buffer_as_string(message)()
+
+    [ stop ]
+    [ scourge.execution.stop()() ]
+
+    [ print failure ]
+    scourge.set("Apparently not stopping!%0a;")(message)
+    scourge.print.buffer_as_string(message)()
+}
+
+[ test current assorted ]
+scratch.test.current_assorted(message !scourge.buffer)() = {
+    [ setup current ]
+    scourge.pack(message, message:start)(current !scourge.current)
+
+    [ loop start ]
+    @start
+
+    [ check if in range ]
+    scourge.current.within_range(current)(continue, exit)
+    scourge.jump(exit, @exit)()
+
+    [ print string ]
+    scourge.pack(current:progress, current:buffer:end)(slice !scourge.buffer)
+    scourge.print.buffer_as_string(slice)()
+    scourge.print.new_line()()
+
+    [ increment current ]
+    scourge.integer.add(current:progress, scourge.constant.1)(current:progress)
+
+    [ jump to start ]
+    scourge.jump(scourge.always, @start)()
+
+    [ loop exit ]
+    @exit
+}
+
+[ test structure operations ]
+scratch.test.structures_assorted()() = {
+    [ print test header ]
+    scourge.set("Structure Assorted Data:")(message)
+    scourge.print.buffer_as_string(message)()
+    scourge.print.new_line()()
+
+    [ setup data ]
+    scourge.pack(scourge.constant.0, scourge.constant.1)(a !scourge.buffer)
+    scourge.pack.null()(b !scourge.list)
+
+    [ calculate size ]
+    scourge.structure.byte_size(a)(a.length)
+    scourge.structure.byte_size(b)(b.length)
+
+    [ print length ]
+    scourge.print.integer.unsigned(a.length)()
+    scourge.print.new_line()()
+    scourge.print.integer.unsigned(b.length)()
+    scourge.print.new_line()()
+
+    [ open list ]
+    scourge.set(scourge.integer.16)(increase)
+    scourge.buffer.request(increase)(buffer)
+
+    [ pack increment ]
+    scourge.set("Pack Increment:%0a;")(message)
+    scourge.print.buffer_as_string(message)()
+    scourge.pack.increment(scourge.constant.5, scourge.constant.2)(output !scratch.box_3D)
+    scourge.print.integer.unsigned(output:x)()
+    scourge.print.new_line()()
+    scourge.print.integer.unsigned(output:y)()
+    scourge.print.new_line()()
+    scourge.print.integer.unsigned(output:z)()
+    scourge.print.new_line()()
+
+    [ close buffer ]
+    scourge.buffer.return(buffer)()
+}
+
+[ test buffer operations ]
+scratch.test.buffers_assorted()() = {
+    [ setup variables ]
+    scourge.set("Buffer calculations:%0A;")(message)
+    scourge.set(scourge.integer.10)(start)
+    scourge.set(scourge.integer.20)(end)
+    scourge.pack(start, end)(buffer !scourge.buffer)
+
+    [ do calculations ]
+    scourge.buffer.calculate.length(buffer)(result.length)
+    scourge.buffer.calculate.end_address(start, result.length)(result.end)
+    scourge.buffer.calculate.start_address(result.length, end)(result.start)
+
+    [ print data ]
+    scourge.print.buffer_as_string(message)()
+    scourge.print.integer.unsigned(result.length)()
+    scourge.print.new_line()()
+    scourge.print.integer.unsigned(result.end)()
+    scourge.print.new_line()()
+    scourge.print.integer.unsigned(result.start)()
+    scourge.print.new_line()()
+}
+
+[ test lists ]
+scratch.test.list(increase !scourge.cell, data !scourge.buffer)() = {
+    [ open list ]
+    scourge.list.open(increase)(list)
+
+    [ append data to list ]
+    scourge.list.append.buffer_data(list, data)(list)
+    scourge.list.append.buffer_data(list, data)(list)
+    scourge.list.append.buffer_data(list, data)(list)
+
+    [ print list ]
+    scratch.print.list(list)()
+    scourge.print.new_line()()
+    scratch.print.list_as_string(list)()
+    scourge.print.new_line()()
+
+    [ close list ]
+    scourge.list.close(list)()
+}
+
+[ print list as string ]
+scratch.print.list_as_string(list !scourge.list)() = {
+    [ create string buffer ]
+    scourge.list.calculate.content_buffer(list)(string)
+
+    [ print buffer ]
+    scourge.print.buffer_as_string(string)()
+}
+
+[ print list raw data ]
+scratch.print.list(list !scourge.list)() = {
+    [ setup strings ]
+    scourge.set("[ ")(header)
+    scourge.set(", ")(separator)
+    scourge.set(" ]")(footer)
+
+    [ print list ]
+    [ print allocation ]
+    scourge.print.buffer_as_string(header)()
+    scourge.print.integer.unsigned(list:allocation:start)()
+    scourge.print.buffer_as_string(separator)()
+    scourge.print.integer.unsigned(list:allocation:end)()
+
+    [ print length ]
+    scourge.print.buffer_as_string(separator)()
+    scourge.print.integer.unsigned(list:length)()
+
+    [ print increase ]
+    scourge.print.buffer_as_string(separator)()
+    scourge.print.integer.unsigned(list:increase)()
+
+    [ print footer ]
+    scourge.print.buffer_as_string(footer)()
+}
+
+[ test file mover ]
+scratch.test.file_buffer_movers()() = {
+    [ test file reader ]
+    [ setup file paths ]
+    scourge.set("./README.md")(readme_path)
+    scourge.set("../scourge-testing/notes/oof.md")(destination_path)
+
+    [ open the file ]
+    scourge.file_to_buffer(readme_path)(buffer)
+
+    [ print file ]
+    scourge.print.buffer_as_string(buffer)()
+
+    [ write to new file ]
+    scourge.buffer_to_file(buffer, destination_path)()
+
+    [ close file ]
+    scourge.buffer.return(buffer)()
+
+    [ delete the file ]
+    scourge.delete_file(destination_path)()
+}
+
+[ test printing ]
+scratch.test.printing()() = {
+    [ setup data ]
+    scourge.set("This is a string.")(string)
+    scourge.set(scourge.integer.127)(cell)
+
+    [ test prints ]
+    scourge.print.buffer_as_string(string)()
+    scourge.print.new_line()()
+    scourge.print.binary.lower_to_higher(cell)()
+    scourge.print.new_line()()
+
+    [ test tab printing ]
+    scourge.set(scourge.integer.2)(tab_count)
+    scourge.print.tabs(tab_count)()
+    scourge.print.buffer_as_string(string)()
+    scourge.print.new_line()()
+}
+
+scratch.test.checking(checking_value !scourge.cell)() = {
+    [ setup variables ]
+    scourge.set(scourge.integer.11)(lower_end)
+    scourge.set(scourge.integer.33)(higher_end)
+    scourge.integer.within_range(lower_end, checking_value, higher_end)(should_run, shouldnt_run)
+
+    [ skip print if necessary ]
+    scourge.jump(shouldnt_run, @skip_print)()
+
+    [ print ]
+    scourge.set("Within range!%0A;")(message)
+    scourge.print.buffer_as_string(message)()
+
+    [ offset ]
+    @skip_print
+}
+
+scratch.say(message !scourge.buffer)(w !scourge.cell) = {
+    scourge.print.buffer_as_string(message)()
+    scourge.set(scourge.integer.4321)(w)
+}
+
+scratch.create.box_3D()(output !scratch.box_3D) = {
+    scourge.set(scourge.integer.333)(x)
+    scourge.set(scourge.integer.444)(y)
+    scourge.set(scourge.integer.555)(z)
+    scourge.pack(x, y, z)(output !scratch.box_3D)
+}
+
+scratch.print.box_3D(box !scratch.box_3D)() = {
+    scourge.set("Box: %0A;")(title)
+    scourge.print.buffer_as_string(title)()
+    scourge.set("%09;")(tab)
+    scourge.print.buffer_as_string(tab)()
+    scourge.print.integer.unsigned(box:x)()
+    scourge.print.new_line()()
+    scourge.print.buffer_as_string(tab)()
+    scourge.print.integer.unsigned(box:y)()
+    scourge.print.new_line()()
+    scourge.print.buffer_as_string(tab)()
+    scourge.print.integer.unsigned(box:z)()
+    scourge.print.new_line()()
+}
+
+!scratch.box_3D(x !scourge.cell, y !scourge.cell, z !scourge.cell)
+
+[ test normal jumping ]
+scratch.test.jumping()() = {
+    [ setup loop data ]
+    scourge.set(scourge.integer.0)(bottom)
+    scourge.set(scourge.integer.0)(current)
+    scourge.set(scourge.integer.10)(top)
+    scourge.set(scourge.integer.1)(increment)
+
+    [ setup offset ]
+    @start
+
+    [ check for out of bounds ]
+    scourge.integer.within_range(bottom, current, top)(shouldnt_quit, should_quit)
+    scourge.jump(should_quit, @exit)()
+
+    [ print variable ]
+    scourge.print.integer.unsigned(current)()
+    scourge.print.new_line()()
+
+    [ increment variable ]
+    scourge.integer.add(current, increment)(current)
+
+    [ jump to loop start ]
+    scourge.jump(scourge.always, @start)()
+
+    [ end loop ]
+    @exit
+}
+
+[ math conglomerate ]
+!scratch.maths(addition !scourge.cell #scourge.json.boolean, subtraction !scourge.cell, multiplication !scourge.cell, division !scourge.cell, modulous !scourge.cell)
+
+[ test math ]
+scratch.test.maths(a !scourge.cell, b !scourge.cell)(maths !scratch.maths) = {
+    [ do maths ]
+    scourge.integer.add(a, b)(maths:addition)
+    scourge.integer.subtract(a, b)(maths:subtraction)
+    scourge.integer.multiply(a, b)(maths:multiplication)
+    scourge.integer.divide(a, b)(maths:division)
+    scourge.integer.modulous(a, b)(maths:modulous)
+}
+
+[ print maths ]
+scratch.test.maths.print(maths !scratch.maths)() = {
+    [ print header ]
+    scourge.set("maths(")(title)
+    scourge.set(" ")(space)
+    scourge.print.buffer_as_string(title)()
+
+    [ print values ]
+    scourge.print.integer.unsigned(maths:addition)()
+    scourge.print.buffer_as_string(space)()
+    scourge.print.integer.unsigned(maths:subtraction)()
+    scourge.print.buffer_as_string(space)()
+    scourge.print.integer.unsigned(maths:multiplication)()
+    scourge.print.buffer_as_string(space)()
+    scourge.print.integer.unsigned(maths:division)()
+    scourge.print.buffer_as_string(space)()
+    scourge.print.integer.unsigned(maths:modulous)()
+
+    [ print footer ]
+    scourge.set(")%0A;")(footer)
+    scourge.print.buffer_as_string(footer)()
+}
+
+[ test buffers ]
+scratch.test.buffer()() = {
+    [ allocate buffer ]
+    scourge.set(scourge.integer.152)(size)
+    scourge.buffer.request(size)(buffer)
+
+    [ setup string & index data ]
+    scourge.set("Hello World!%0A;")(message)
+    scourge.set(scourge.integer.1)(byte_count)
+
+    [ read character from string ]
+    scourge.address_to_cell(message:start, byte_count)(data, advancement)
+
+    [ increment data ]
+    scourge.set(scourge.integer.1)(increment)
+    scourge.integer.add(data, increment)(data)
+
+    [ replace character in string ]
+    scourge.cell_to_address(data, byte_count, message:start)(advancement)
+
+    [ print new string ]
+    scourge.print.buffer_as_string(message)()
+
+    [ deallocate buffer ]
+    scourge.buffer.return(buffer)()
+}
+
+[ test bits ]
+scratch.test.bits()() = {
+    [ setup variables ]
+    scourge.set(scourge.binary.1010_0101)(a)
+    scourge.set(scourge.binary.1010_1010)(b)
+    scourge.set(scourge.integer.2)(c)
+
+    [ test bits ]
+    scourge.bits.or(a, b)(or_result)
+    scourge.bits.invert(a)(invert_result)
+    scourge.bits.and(a, b)(and_result)
+    scourge.bits.xor(a, b)(xor_result)
+    scourge.bits.shift_higher(a, c)(shift_higher_result)
+    scourge.bits.shift_lower(a, c)(shift_lower_result)
+    scourge.bits.overwrite(b[mask], a[old_bits], c[new_bits])(overwrite_result)
+
+    [ print results ]
+    scourge.print.binary.lower_to_higher(b)()
+    scourge.print.new_line()()
+    scourge.print.binary.lower_to_higher(or_result)()
+    scourge.print.new_line()()
+    scourge.print.binary.lower_to_higher(invert_result)()
+    scourge.print.new_line()()
+    scourge.print.binary.lower_to_higher(and_result)()
+    scourge.print.new_line()()
+    scourge.print.binary.lower_to_higher(xor_result)()
+    scourge.print.new_line()()
+    scourge.print.binary.lower_to_higher(shift_higher_result)()
+    scourge.print.new_line()()
+    scourge.print.binary.lower_to_higher(shift_lower_result)()
+    scourge.print.new_line()()
+    scourge.print.binary.lower_to_higher(overwrite_result)()
+    scourge.print.new_line()()
+}
+
+[ print time ]
+scratch.print.time(time !scourge.time)() = {
+    scourge.set("Current time: [ seconds: ")(message)
+    scourge.print.buffer_as_string(message)()
+    scourge.print.integer.unsigned(time:seconds)()
+    scourge.set(", nanoseconds: ")(message)
+    scourge.print.buffer_as_string(message)()
+    scourge.print.integer.unsigned(time:nanoseconds)()
+    scourge.set(" ]%0A;")(message)
+    scourge.print.buffer_as_string(message)()
+}
+
+[ test tags ]
+!scratch.tags(
+    buffer !scourge.buffer #scourge.json.buffer.addresses
+)
+
+[ test compiler assorted ]
+scratch.test.compiler_assorted()() = {
+    [ get source file ]
+    scourge.set("../scourge-testing/demonstration/hello-world.scourge")(file_path)
+    scourge.file_to_buffer(file_path)(source)
+
+    [ print file ]
+    scourge.print.buffer_as_string(source)()
+    scourge.print.new_line()()
+
+    [ append source file to source file list ]
+    scourge.structure.byte_size(source)(increase)
+    scourge.list.open(increase)(sources)
+    scourge.list.append.buffer(sources, source)(sources)
+
+    [ DEBUG TEST - give incorrect buffer size ]
+    [ scourge.integer.add(sources:length, scourge.constant.1)(sources:length) ]
+
+    [ DEBUG TEST - append null buffer ]
+    [ scourge.pack.null()(null_buffer !scourge.buffer)
+    scourge.list.append.buffer(sources, null_buffer)(sources) ]
+
+    [ get buffer of buffers ]
+    scourge.list.calculate.content_buffer(sources)(sources.buffer)
+
+    [ create settings ]
+    scourge.compiler.configure.default_compile()(settings)
+
+    [ compile ]
+    scourge.compiler.compile(sources.buffer, settings)(byte_code, debug_information, compiler.error)
+    scourge.error.convert_compiler_error_to_scourge_error(compiler.error)(error)
+
+    [ print message & skip context creation ]
+    @print_compilation_error compiler.error:occured = {
+        scourge.print.buffer_as_string(compiler.error:message)()
+        scourge.print.new_line()()
+        scourge.jump(scourge.always, @clean_up)()
+    }
+
+    [ setup context ]
+    scourge.context.open()(context)
+    scourge.context.install_program(context, byte_code)()
+
+    [ do stats for context ]
+    scourge.buffer.calculate.length(context)(context.length)
+    scourge.print.integer.unsigned(context.length)()
+    scourge.print.new_line()()
+
+    [ run code ]
+    scourge.set(scourge.integer.n1)(instruction_count)
+    scourge.context.run(context, instruction_count)()
+
+    [ clean up context ]
+    @clean_up_context
+    scourge.buffer.return(context)()
+
+    [ clean up ]
+    @clean_up
+    scourge.buffer.return(byte_code)()
+    scourge.buffer.return(source)()
+    scourge.list.close(sources)()
+}
+
+[ test allocation checker ]
+scratch.test.find_allocation()() = {
+    [ setup allocation ]
+    scourge.buffer.request(scourge.constant.64)(real_allocation)
+
+    [ setup searches ]
+    scourge.copy(real_allocation)(search_1)
+    scourge.copy(real_allocation)(search_2)
+    scourge.copy(real_allocation)(search_3)
+
+    [ test search 1 ]
+    [ must check for exact same buffer ]
+    scourge.find_allocation(search_1)(found, found_allocation)
+
+    [ print findings ]
+    scratch.test.find_allocation.print.result(found, found_allocation)()
+    scourge.print.new_line()()
+
+    [ test search 2 ]
+    [ make test 2 beyond the bounds of the allocation ]
+    scourge.integer.subtract(search_2:start, scourge.constant.1)(search_2:start)
+    scourge.integer.add(search_2:end, scourge.constant.1)(search_2:end)
+
+    [ test search ]
+    scourge.find_allocation(search_2)(found, found_allocation)
+
+    [ print findings ]
+    scratch.test.find_allocation.print.result(found, found_allocation)()
+    scourge.print.new_line()()
+
+    [ test search 3 ]
+    [ make test 3 within the bounds of the allocation ]
+    scourge.integer.add(search_3:start, scourge.constant.1)(search_3:start)
+    scourge.integer.subtract(search_3:end, scourge.constant.1)(search_3:end)
+
+    [ test search ]
+    scourge.find_allocation(search_3)(found, found_allocation)
+
+    [ print findings ]
+    scratch.test.find_allocation.print.result(found, found_allocation)()
+    scourge.print.new_line()()
+
+    [ clean up test allocation ]
+    scourge.buffer.return(real_allocation)()
+}
+
+[ print result from allocation test ]
+scratch.test.find_allocation.print.result(found !scourge.cell, source_allocation !scourge.buffer)() = {
+    [ setup strings ]
+    scourge.set("[ ")(header)
+    scourge.set(", ")(separator)
+    scourge.set(" ]")(footer)
+
+    [ print result ]
+    scourge.print.buffer_as_string(header)()
+    scourge.print.integer.unsigned(found)()
+    scourge.print.buffer_as_string(separator)()
+    scourge.print.integer.unsigned(source_allocation:start)()
+    scourge.print.buffer_as_string(separator)()
+    scourge.print.integer.unsigned(source_allocation:end)()
+    scourge.print.buffer_as_string(footer)()
+}
+
+[ check allocation limit ]
+scratch.test.allocation_limits()() = {
+    [ setup size ]
+    scourge.set(scourge.hexadecimal.1000000000)(size)
+
+    [ allocate ]
+    scourge.buffer.request(size)(allocation)
+
+    [ print allocation ]
+    scourge.print.buffer(allocation)()
+    scourge.print.new_line()()
+
+    [ return allocation ]
+    scourge.buffer.return(allocation)()
+
+    [ yay! no crash! ]
+    scourge.set("No crashes with the eternal scourge!%0a;")(message)
+    scourge.print.buffer_as_string(message)()
+}
+
+[ test time functions ]
+scratch.test.time_assorted()() = {
+    [ setup constants ]
+    scourge.set(scourge.integer.1_000_000_000)(nanoseconds_in_second)
+    scourge.integer.subtract(nanoseconds_in_second, scourge.constant.1)(just_under)
+
+    [ setup dummy times ]
+    scourge.pack(scourge.constant.0, just_under)(a !scourge.time)
+    scourge.pack(scourge.constant.0, scourge.constant.1)(b !scourge.time)
+
+    [ print time ]
+    scratch.print.time(a)()
+    scratch.print.time(b)()
+
+    [ add times ]
+    scourge.time.add(a, b)(c)
+
+    [ print result ]
+    scratch.print.time(c)()
+
+    [ print space ]
+    scourge.print.new_line()()
+}
+
+[ test stack functions ]
+scratch.test.stack_assorted()() = {
+    [ print current stack ]
+    scourge.print.current(scourge.call_stack)()
+    scourge.print.new_line()()
+
+    [ allocate new stack ]
+    scourge.set(scourge.integer.100000)(length)
+    scourge.buffer.request(length)(new_stack.buffer)
+    scourge.pack(new_stack.buffer, new_stack.buffer:start)(new_stack !scourge.current)
+
+    [ save old stack ]
+    scourge.copy(scourge.call_stack)(old_stack)
+
+    [ install new stack ]
+    scourge.copy(new_stack)(scourge.call_stack)
+
+    [ print stack ]
+    scourge.print.current(scourge.call_stack)()
+    scourge.print.new_line()()
+
+    [ reinstall old stack ]
+    scourge.copy(old_stack)(scourge.call_stack)
+
+    [ clean up old stack ]
+    scourge.buffer.return(new_stack.buffer)()
+}

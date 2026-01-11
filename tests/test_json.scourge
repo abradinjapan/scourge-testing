@@ -1,0 +1,100 @@
+[ test main ]
+scourge.main()() = {
+    [ run first test ]
+    test.json.test_json_compiler()()
+}
+
+[ run test ]
+test.json.test_json_compiler()() = {
+    [ test compiler ]
+    [ get file data ]
+    scourge.set("./tests/data/test_json.json")(file_path)
+    scourge.file_to_buffer(file_path)(file_text)
+
+    [ print raw text ]
+    scourge.print.buffer_as_string(file_text)()
+    scourge.print.new_line()()
+
+    [ for speed, disable address catching ]
+    scourge.copy(scourge.true)(scourge.catch_addresses)
+
+    [ compile ]
+    scourge.json.compile(file_text, scourge.true)(workspace)
+    scourge.print.new_line()()
+
+    [ display message ]
+    scourge.error.print_if_occured(workspace:error)()
+
+    [ test traversal ]
+    scourge.bits.xor(workspace:error:occured, scourge.constant.1)(no_error)
+    @traverse no_error = {
+        [ DEBUG ]
+        scourge.set("Traversing by name!%0a;")(message)
+        scourge.print.buffer_as_string(message)()
+
+        [ test by name ]
+        test.json.test_traversal.by_name(workspace, workspace:parslings)()
+        scourge.print.new_line()()
+
+        [ DEBUG ]
+        scourge.set("Traversing by index!%0a;")(message)
+        scourge.print.buffer_as_string(message)()
+
+        [ test by index ]
+        test.json.test_traversal.by_index(workspace, workspace:parslings)()
+        scourge.print.new_line()()
+
+        [ DEBUG ]
+        scourge.set("Stringifying!%0a;")(message)
+        scourge.print.buffer_as_string(message)()
+
+        [ test stringifyer ]
+        scourge.json.stringify.parslings(workspace !scourge.json.workspace)(string !scourge.buffer)
+        scourge.print.buffer_as_string(string)()
+        scourge.buffer.return(string)()
+    }
+
+    [ clean up file ]
+    scourge.buffer.return(file_text)()
+
+    [ clean up workspace ]
+    scourge.json.compile.close.workspace(workspace)()
+}
+
+[ test json traversal by name ]
+test.json.test_traversal.by_name(workspace !scourge.json.workspace, parslings !scourge.json.parslings)() = {
+    [ setup strings ]
+    scourge.set("foopo")(name_0)
+    scourge.set("Hello")(name_1)
+
+    [ test traversals ]
+    scourge.json.traverse.retrieve_parsling.by_name(parslings:root, name_0)(parsling_0, found, not_found)
+    scourge.json.traverse.retrieve_parsling.by_name(parsling_0, name_1)(parsling_1, found, not_found)
+
+    [ DEBUG ]
+    @failure not_found = {
+        [ setup and print message ]
+        scourge.set("Traversal Failure!%0a;")(message)
+        scourge.print.buffer_as_string(message)()
+    }
+
+    [ print parsling value ]
+    scourge.json.compile.print.parsling(workspace, parsling_1, scourge.constant.0)()
+}
+
+[ test json traversal by index ]
+test.json.test_traversal.by_index(workspace !scourge.json.workspace, parslings !scourge.json.parslings)() = {
+    [ test traversals ]
+    scourge.json.traverse.retrieve_parsling.by_index(parslings:root, scourge.constant.0)(parsling_0, found, not_found)
+    scourge.json.traverse.retrieve_parsling.by_index(parsling_0, scourge.constant.1)(parsling_1, found, not_found)
+
+    [ DEBUG ]
+    @failure not_found = {
+        [ setup and print message ]
+        scourge.set("Traversal Failure!%0a;")(message)
+        scourge.print.buffer_as_string(message)()
+    }
+
+    [ print parsling value ]
+    scourge.json.compile.print.parsling(workspace, parsling_1, scourge.constant.0)()
+}

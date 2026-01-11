@@ -1,0 +1,42 @@
+{
+    "data": [
+        {
+            "oof": "Random Dancing!"
+        },
+        {
+            "boof": [
+                "hoops",
+                "boops",
+                "oops"
+            ],
+            "yo": "yo",
+            "yoyo": 0
+        },
+        "oof",
+        "oof",
+        12234
+    ],
+    "girfurjigglestan": 100,
+    "oof": 100,
+    "foop": {
+        "ofo": 200
+    },
+    "foopo": {
+        "ofof": 100,
+        "Hello": "hi",
+        "thing": {
+            "doer": true,
+            "doerdoer": false,
+            "thingdoer": null
+        }
+    },
+    "empty": {
+
+    },
+    "also_empty": [
+        
+    ],
+    "test": [
+        []
+    ]
+}

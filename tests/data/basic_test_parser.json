@@ -1,0 +1,45 @@
+{
+    "root": [
+        { "name": "files", "data": [ "files", { "type": "end_of_files" } ] }
+    ],
+    "files": [
+        { "name": "files", "data": [ { "type": "list", "node": "file" } ] }
+    ],
+    "file": [
+        { "name": "contents", "data": [ "file_contents", { "type": "end_of_file" } ] }
+    ],
+    "file_contents": [
+        { "name": "sentences", "data": [ "sentences" ] }
+    ],
+    "sentences": [
+        { "name": "sentences", "data": [ { "type": "list", "node": "sentence" } ] }
+    ],
+    "sentence": [
+        { "name": "sentence", "data": [ { "type": "list", "node": "word_whitespaceable" }, "period" ] }
+    ],
+    "word_whitespaceable": [
+        { "name": "word_with_whitespace", "data": [ "whitespace", "word" ] },
+        { "name": "word_without_whitespace", "data": [ "word" ] }
+    ],
+    "word": {
+        "byte_ranges": [
+            [ 38, 39 ],
+            [ 48, 57 ],
+            [ 65, 90 ],
+            [ 97, 122 ]
+        ],
+        "byte_count_limits": [ 1, 256 ]
+    },
+    "period": {
+        "byte_ranges": [
+            [ 46, 46 ]
+        ],
+        "byte_count_limits": [ 1, 1 ]
+    },
+    "whitespace": {
+        "byte_ranges": [
+            [ 0, 32 ]
+        ],
+        "byte_count_limits": [ 1, "infinite" ]
+    }
+}
