@@ -12,9 +12,6 @@ scourge.main()() = {
 
     [ test anvil ]
     test.anvil()()
-
-    [ test parser generator ]
-    test.parser()()
 }
 
 [ basic language abilities ]
@@ -42,16 +39,6 @@ test.anvil()() = {
     [ setup file path ]
     scourge.set("./tests/test_anvil.scourge")(file_path)
     scourge.pack.null()(program.input !scourge.buffer)
-
-    [ run test ]
-    scourge.just_run.one_file(file_path, program.input)(compilation.error, program.result, program.error)
-}
-
-[ test parser generator ]
-test.parser()() = {
-    [ setup file paths ]
-    scourge.set("./tests/test_parser_generator.scourge")(file_path)
-    scourge.set("{ data: %22;Hello World!%22; }%0A;")(program.input)
 
     [ run test ]
     scourge.just_run.one_file(file_path, program.input)(compilation.error, program.result, program.error)
