@@ -515,9 +515,8 @@ scratch.test.compiler_assorted()() = {
 
     [ compile ]
     scourge.compiler.compile(sources.buffer, settings)(byte_code, debug_information, compiler.error)
-    scourge.error.convert_compiler_error_to_scourge_error(compiler.error)(error)
 
-    [ print message & skip context creation ]
+    [ print message & skip context creation if occured ]
     @print_compilation_error compiler.error:occured = {
         scourge.print.buffer_as_string(compiler.error:message)()
         scourge.print.new_line()()
